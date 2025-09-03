@@ -53,18 +53,6 @@ const ProductCard = ({
 				</div>
 			</div>
 
-			<div className='spec-details'>
-				<h3>Specifications</h3>
-				{Object.entries(product.specs).map(([key, value]) => (
-					<div key={key} className='spec-detail-item'>
-						<span className='spec-label'>
-							{key.charAt(0).toUpperCase() + key.slice(1)}
-						</span>
-						<span className='spec-value'>{value}</span>
-					</div>
-				))}
-			</div>
-
 			{selectedDate && selectedTime && (
 				<div className='booking-info'>
 					<span className='booking-date'>{selectedDate}</span>
