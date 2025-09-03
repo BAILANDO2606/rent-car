@@ -1,0 +1,32 @@
+export const products = [
+	{
+		id: 1,
+		name: 'All New Rush',
+		type: 'SUV',
+		image: '/images/rush.png',
+		price: 72.0,
+		fuelCapacity: 70,
+		transmission: 'Manual',
+		capacity: 6,
+	},
+	{
+		id: 2,
+		name: 'Toyota Corrola',
+		type: 'Sedan',
+		image: '/images/corolla.png',
+		price: 65.0,
+		fuelCapacity: 60,
+		transmission: 'Automatic',
+		capacity: 4,
+	},
+	{
+		id: 3,
+		name: 'Honda CR-V',
+		type: 'SUV',
+		image: '/images/cr-v.png',
+		price: 80.0,
+		fuelCapacity: 65,
+		transmission: 'Automatic',
+		capacity: 5,
+	},
+]

@@ -1,0 +1,16 @@
+.datetime-picker {
+	display: flex;
+	gap: 16px;
+}
+
+.picker-group {
+	flex: 1;
+}
+
+.picker-group label {
+	display: block;
+	margin-bottom: 8px;
+	color: #1a202c;
+	font-size: 14px;
+	font-weight: 500;
+}

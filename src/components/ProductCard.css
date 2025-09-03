@@ -1,0 +1,253 @@
+.product-card {
+	background: #ffffff;
+	border-radius: 10px;
+	padding: 24px;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+	transition: all 0.3s ease;
+	display: flex;
+	flex-direction: column;
+}
+
+.product-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-card.unavailable {
+	opacity: 0.7;
+	pointer-events: none;
+}
+
+.product-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.product-type {
+	color: #90a3bf;
+	font-size: 14px;
+}
+
+.favorite-button {
+	background: none;
+	border: none;
+	color: #90a3bf;
+	cursor: pointer;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.2s;
+}
+
+.favorite-button:hover {
+	color: #ed3f3f;
+	transform: scale(1.1);
+}
+
+.favorite-button.active {
+	color: #ed3f3f;
+}
+
+.product-name {
+	font-size: 20px;
+	font-weight: 600;
+	color: #1a202c;
+	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.product-image-container {
+	width: 100%;
+	height: 200px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.product-image {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.product-specs {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	margin-bottom: 20px;
+	padding: 16px;
+	background-color: #f8fafc;
+	border-radius: 8px;
+}
+
+.spec-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #64748b;
+	font-size: 14px;
+	padding: 8px;
+	background: white;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.spec-item svg {
+	color: #3563e9;
+}
+
+.spec-item:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spec-details {
+	margin-top: 16px;
+	padding: 16px;
+	background-color: #f8fafc;
+	border-radius: 8px;
+	font-size: 14px;
+}
+
+.spec-details h3 {
+	color: #1a202c;
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+
+.spec-detail-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 0;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.spec-detail-item:last-child {
+	border-bottom: none;
+}
+
+.spec-label {
+	color: #64748b;
+}
+
+.spec-value {
+	color: #1a202c;
+	font-weight: 500;
+}
+
+.spec-item svg {
+	font-size: 16px;
+}
+
+.product-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.price-container {
+	display: flex;
+	align-items: baseline;
+}
+
+.price {
+	font-size: 20px;
+	font-weight: 700;
+	color: #1a202c;
+}
+
+.price-period {
+	color: #90a3bf;
+	font-size: 14px;
+}
+
+.booking-info {
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	margin-bottom: 16px;
+	padding: 12px;
+	background-color: #f8fafc;
+	border-radius: 8px;
+	font-size: 14px;
+	color: #1a202c;
+}
+
+.booking-date,
+.booking-time {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.rent-button {
+	background: #3563e9;
+	color: white;
+	border: none;
+	padding: 8px 24px;
+	border-radius: 8px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rent-button:hover {
+	background: #2451db;
+	transform: translateY(-2px);
+}
+
+.rent-button:active {
+	transform: translateY(0);
+}
+
+.rent-button:disabled {
+	background: #e2e8f0;
+	color: #94a3b8;
+	cursor: not-allowed;
+	transform: none;
+}
+
+@media (max-width: 768px) {
+	.product-card {
+		padding: 16px;
+	}
+
+	.product-image-container {
+		height: 160px;
+	}
+
+	.product-specs {
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.spec-item {
+		flex: 1;
+		min-width: 100px;
+		justify-content: center;
+	}
+}
+
+.rent-button {
+	background: #3563e9;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.rent-button:hover {
+	background: #2451d1;
+}
