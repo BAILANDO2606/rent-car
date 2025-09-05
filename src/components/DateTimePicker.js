@@ -5,7 +5,7 @@ import './DateTimePicker.css'
 const DateTimePicker = ({
 	selectedDate,
 	selectedTime,
-	availableTimes,
+	availableTimes = [],
 	onDateChange,
 	onTimeChange,
 	isLoading,
