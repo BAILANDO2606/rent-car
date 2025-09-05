@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaSearch, FaHeart, FaUser } from 'react-icons/fa'
 import './Header.css'
 import ProfileMenu from './ProfileMenu'
 import AuthModal from './AuthModal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Header = () => {
 	const [searchQuery, setSearchQuery] = useState('')
@@ -10,6 +13,7 @@ const Header = () => {
 	const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const profileMenuRef = useRef(null)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const handleClickOutside = event => {
@@ -42,27 +46,42 @@ const Header = () => {
 	const handleLogout = () => {
 		setIsLoggedIn(false)
 		setIsProfileMenuOpen(false)
+		navigate('/')
+		toast.info('You have been logged out', {
+			position: "top-right",
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+		})
+		// Відкриваємо вікно авторизації після невеликої затримки,
+		// щоб користувач встиг побачити повідомлення про вихід
+		setTimeout(() => {
+			setIsAuthModalOpen(true)
+		}, 500)
 	}
 
 	return (
 		<header className='header'>
 			<div className='header-container'>
-				{/* Logo */}
-				<h1 className='logo'>MORENT</h1>
-
-				{/* Search Bar */}
+				<h1
+					className='logo'
+					style={{ cursor: 'pointer' }}
+					onClick={() => navigate('/')}
+				>
+					MORENT
+				</h1>
 				<div className='search-container'>
 					<FaSearch className='search-icon' />
 					<input
 						type='text'
-						placeholder='Пошук автомобіля...'
+						placeholder='Search...'
 						value={searchQuery}
 						onChange={e => setSearchQuery(e.target.value)}
 						className='search-input'
 					/>
 				</div>
-
-				{/* Navigation */}
 				<nav className='nav-buttons'>
 					<button className='icon-button' title='Вибрані'>
 						<FaHeart size={20} />
@@ -96,8 +115,14 @@ const Header = () => {
 					onClose={() => setIsAuthModalOpen(false)}
 					onLogin={handleLogin}
 					onRegister={handleRegister}
+					logoutMessage={
+						!isLoggedIn
+							? 'Ви вийшли з аккаунту. Будь ласка, увійдіть для подальшого користування додатком.'
+							: undefined
+					}
 				/>
 			)}
+			<ToastContainer />
 		</header>
 	)
 }
