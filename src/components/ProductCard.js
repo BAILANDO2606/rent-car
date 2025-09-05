@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaHeart, FaGasPump, FaUsers } from 'react-icons/fa'
 import { GiGearStickPattern } from 'react-icons/gi'
 import './ProductCard.css'
@@ -10,20 +11,22 @@ const ProductCard = ({
 	selectedTime,
 	onRent,
 }) => {
-	const { name, type, image, price, fuelCapacity, transmission, capacity } =
+	const { id, name, type, image, price, fuelCapacity, transmission, capacity } =
 		product
 	const [isFavorite, setIsFavorite] = React.useState(false)
+	const navigate = useNavigate()
 
 	const handleRentClick = () => {
-		if (onRent) {
-			onRent(product)
-		}
+		navigate(`/car/${id}`)
 	}
 
 	return (
 		<div className={`product-card ${!isAvailable ? 'unavailable' : ''}`}>
 			<div className='product-header'>
-				<div className='product-type'>{type}</div>
+				<div>
+					<h2 className='product-name'>{name}</h2>
+					<p className='product-type'>{type}</p>
+				</div>
 				<button
 					className={`favorite-button ${isFavorite ? 'active' : ''}`}
 					onClick={() => setIsFavorite(!isFavorite)}
@@ -31,8 +34,6 @@ const ProductCard = ({
 					<FaHeart />
 				</button>
 			</div>
-
-			<h2 className='product-name'>{name}</h2>
 
 			<div className='product-image-container'>
 				<img src={image} alt={name} className='product-image' />

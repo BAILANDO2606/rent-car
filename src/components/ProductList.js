@@ -1,166 +1,118 @@
 import React from 'react'
 import ProductCard from './ProductCard'
+import Filters from './Filters'
 import './ProductList.css'
 
-// Статичні дані автомобілів
+// Example static car data
 const CARS_DATA = [
 	{
 		id: 1,
 		name: 'Koenigsegg',
 		type: 'Sport',
-		image: '/images/koenigsegg.png',
 		price: 99,
-		fuelCapacity: 80,
-		transmission: 'Manual',
+		image: `${process.env.PUBLIC_URL}/images/koenigsegg.png`,
 		capacity: 2,
+		transmission: 'Manual',
+		fuel: '90L',
 	},
 	{
 		id: 2,
-		name: 'All New Rush',
-		type: 'SUV',
-		image: '/images/rush.png',
-		price: 72,
-		fuelCapacity: 70,
+		name: 'Nissan GT-R',
+		type: 'Sport',
+		price: 80,
+		image: `${process.env.PUBLIC_URL}/images/nissan-gtr.png`,
+		capacity: 2,
 		transmission: 'Manual',
-		capacity: 6,
+		fuel: '80L',
 	},
 	{
 		id: 3,
-		name: 'CR-V',
-		type: 'SUV',
-		image: '/images/crv.png',
-		price: 80,
-		fuelCapacity: 68,
-		transmission: 'Automatic',
-		capacity: 6,
+		name: 'Rolls-Royce',
+		type: 'Sport',
+		price: 96,
+		image: `${process.env.PUBLIC_URL}/images/rolls-royce.png`,
+		capacity: 4,
+		transmission: 'Manual',
+		fuel: '70L',
 	},
 	{
 		id: 4,
-		name: 'Rolls-Royce',
-		type: 'Sedan',
-		image: '/images/rolls-royce.png',
-		price: 96,
-		fuelCapacity: 82,
-		transmission: 'Automatic',
-		capacity: 4,
+		name: 'All New Rush',
+		type: 'SUV',
+		price: 72,
+		image: `${process.env.PUBLIC_URL}/images/rush.png`,
+		capacity: 6,
+		transmission: 'Manual',
+		fuel: '70L',
 	},
 	{
 		id: 5,
-		name: 'New MG ZS',
+		name: 'CR - V',
 		type: 'SUV',
-		image: '/images/mg-zs.png',
 		price: 80,
-		fuelCapacity: 48,
+		image: `${process.env.PUBLIC_URL}/images/crv.png`,
+		capacity: 6,
 		transmission: 'Manual',
-		capacity: 5,
+		fuel: '80L',
 	},
 	{
 		id: 6,
-		name: 'MG ZX Excite',
-		type: 'Hatchback',
-		image: '/images/mg-zx.png',
+		name: 'All New Terios',
+		type: 'SUV',
 		price: 74,
-		fuelCapacity: 50,
-		transmission: 'Electric',
-		capacity: 5,
+		image: `${process.env.PUBLIC_URL}/images/terios.png`,
+		capacity: 6,
+		transmission: 'Manual',
+		fuel: '90L',
 	},
+	// Add more cars as needed
 ]
 
 const ProductList = () => {
-	const [sortBy, setSortBy] = React.useState('name')
-	const [filterType, setFilterType] = React.useState('all')
-	const [priceRange, setPriceRange] = React.useState(100)
-	const [capacity, setCapacity] = React.useState('all')
+	const [filters, setFilters] = React.useState({
+		types: [],
+		capacities: [],
+		maxPrice: 100,
+	})
+
+	const handleFilterChange = newFilters => {
+		setFilters(newFilters)
+	}
 
 	const filteredAndSortedCars = React.useMemo(() => {
 		let filtered = [...CARS_DATA]
 
-		// Фільтрація за типом
-		if (filterType !== 'all') {
-			filtered = filtered.filter(
-				car => car.type.toLowerCase() === filterType.toLowerCase()
+		// Filter by type
+		if (filters.types.length > 0) {
+			filtered = filtered.filter(car =>
+				filters.types.includes(car.type.toLowerCase())
 			)
 		}
 
-		// Фільтрація за ціною
-		filtered = filtered.filter(car => car.price <= priceRange)
+		// Filter by price
+		filtered = filtered.filter(car => car.price <= filters.maxPrice)
 
-		// Фільтрація за місткістю
-		if (capacity !== 'all') {
-			filtered = filtered.filter(car => car.capacity >= parseInt(capacity))
+		// Filter by capacity
+		if (filters.capacities.length > 0) {
+			filtered = filtered.filter(car => {
+				if (filters.capacities.includes('8')) {
+					return (
+						car.capacity >= 8 ||
+						filters.capacities.includes(String(car.capacity))
+					)
+				}
+				return filters.capacities.includes(String(car.capacity))
+			})
 		}
 
-		// Сортування
-		filtered.sort((a, b) => {
-			switch (sortBy) {
-				case 'price-low':
-					return a.price - b.price
-				case 'price-high':
-					return b.price - a.price
-				case 'capacity':
-					return b.capacity - a.capacity
-				default:
-					return a.name.localeCompare(b.name)
-			}
-		})
-
 		return filtered
-	}, [sortBy, filterType, priceRange, capacity])
-
-	const carTypes = [
-		'all',
-		...new Set(CARS_DATA.map(car => car.type.toLowerCase())),
-	]
+	}, [filters])
 
 	return (
 		<div className='product-list-container'>
 			<div className='filters-sidebar'>
-				<div className='filter-section'>
-					<h3>Sort By</h3>
-					<select value={sortBy} onChange={e => setSortBy(e.target.value)}>
-						<option value='name'>Name</option>
-						<option value='price-low'>Price: Low to High</option>
-						<option value='price-high'>Price: High to Low</option>
-						<option value='capacity'>Capacity</option>
-					</select>
-				</div>
-
-				<div className='filter-section'>
-					<h3>Car Type</h3>
-					<select
-						value={filterType}
-						onChange={e => setFilterType(e.target.value)}
-					>
-						{carTypes.map(type => (
-							<option key={type} value={type}>
-								{type.charAt(0).toUpperCase() + type.slice(1)}
-							</option>
-						))}
-					</select>
-				</div>
-
-				<div className='filter-section'>
-					<h3>Max Price: ${priceRange}</h3>
-					<input
-						type='range'
-						min='0'
-						max='100'
-						value={priceRange}
-						onChange={e => setPriceRange(Number(e.target.value))}
-					/>
-				</div>
-
-				<div className='filter-section'>
-					<h3>Minimum Capacity</h3>
-					<select value={capacity} onChange={e => setCapacity(e.target.value)}>
-						<option value='all'>All</option>
-						<option value='2'>2+ people</option>
-						<option value='4'>4+ people</option>
-						<option value='6'>6+ people</option>
-					</select>
-				</div>
+				<Filters onFilterChange={handleFilterChange} />
 			</div>
-
 			<div className='products-section'>
 				<div className='product-list'>
 					{filteredAndSortedCars.map(car => (
