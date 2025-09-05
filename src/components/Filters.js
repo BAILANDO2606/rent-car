@@ -1,87 +1,121 @@
-import React from 'react'
-import './Filters.css'
+import React, { useState } from 'react'
+import './FiltersNew.css'
 
-const Filters = ({
-	selectedType,
-	selectedCapacity,
-	priceRange,
-	onTypeChange,
-	onCapacityChange,
-	onPriceRangeChange,
-}) => {
-	const carTypes = [
-		{ value: 'sport', label: 'Sport', count: 10 },
-		{ value: 'suv', label: 'SUV', count: 12 },
-		{ value: 'mpv', label: 'MPV', count: 16 },
-		{ value: 'sedan', label: 'Sedan', count: 20 },
-		{ value: 'coupe', label: 'Coupe', count: 14 },
-		{ value: 'hatchback', label: 'Hatchback', count: 14 },
-	]
+const carTypes = [
+	{ id: 'sport', label: 'Sport', count: 10 },
+	{ id: 'suv', label: 'SUV', count: 12 },
+	{ id: 'mpv', label: 'MPV', count: 16 },
+	{ id: 'sedan', label: 'Sedan', count: 20 },
+	{ id: 'coupe', label: 'Coupe', count: 14 },
+	{ id: 'hatchback', label: 'Hatchback', count: 14 },
+]
 
-	const capacityOptions = [
-		{ value: '2', label: '2 Person', count: 10 },
-		{ value: '4', label: '4 Person', count: 14 },
-		{ value: '6', label: '6 Person', count: 12 },
-		{ value: '8', label: '8 or More', count: 16 },
-	]
+const capacities = [
+	{ id: '2', label: '2 Person', count: 10 },
+	{ id: '4', label: '4 Person', count: 14 },
+	{ id: '6', label: '6 Person', count: 12 },
+	{ id: '8', label: '8 or More', count: 16 },
+]
+
+function FiltersNew({ onFilterChange }) {
+	const [selectedTypes, setSelectedTypes] = useState([])
+	const [selectedCapacities, setSelectedCapacities] = useState([])
+	const [maxPrice, setMaxPrice] = useState(100)
+
+	const handleTypeChange = typeId => {
+		const newTypes = selectedTypes.includes(typeId)
+			? selectedTypes.filter(id => id !== typeId)
+			: [...selectedTypes, typeId]
+		setSelectedTypes(newTypes)
+		onFilterChange?.({
+			types: newTypes,
+			capacities: selectedCapacities,
+			maxPrice,
+		})
+	}
+
+	const handleCapacityChange = capacityId => {
+		const newCapacities = selectedCapacities.includes(capacityId)
+			? selectedCapacities.filter(id => id !== capacityId)
+			: [...selectedCapacities, capacityId]
+		setSelectedCapacities(newCapacities)
+		onFilterChange?.({
+			types: selectedTypes,
+			capacities: newCapacities,
+			maxPrice,
+		})
+	}
+
+	const handlePriceChange = e => {
+		const price = parseInt(e.target.value)
+		setMaxPrice(price)
+		onFilterChange?.({
+			types: selectedTypes,
+			capacities: selectedCapacities,
+			maxPrice: price,
+		})
+	}
 
 	return (
 		<div className='filters'>
-			<div className='section-title'>TYPE</div>
-			<div className='filter-group'>
-				{carTypes.map(type => (
-					<div className='checkbox-row' key={type.value}>
-						<input
-							type='checkbox'
-							id={`type-${type.value}`}
-							value={type.value}
-							checked={selectedType.includes(type.value)}
-							onChange={() => onTypeChange(type.value)}
-						/>
-						<label htmlFor={`type-${type.value}`}>
-							{type.label}{' '}
-							<span style={{ color: '#9ca3af', fontWeight: 400 }}>
-								({type.count})
+			<div className='filters-section'>
+				<h3 className='filters-title'>TYPE</h3>
+				<div className='filters-options'>
+					{carTypes.map(type => (
+						<label key={type.id} className='filter-option'>
+							<input
+								type='checkbox'
+								className='filter-checkbox'
+								checked={selectedTypes.includes(type.id)}
+								onChange={() => handleTypeChange(type.id)}
+							/>
+							<span className='filter-label'>
+								{type.label}
+								<span className='filter-count'>({type.count})</span>
 							</span>
 						</label>
-					</div>
-				))}
+					))}
+				</div>
 			</div>
-			<div className='section-title'>CAPACITY</div>
-			<div className='filter-group'>
-				{capacityOptions.map(cap => (
-					<div className='checkbox-row' key={cap.value}>
-						<input
-							type='checkbox'
-							id={`capacity-${cap.value}`}
-							value={cap.value}
-							checked={selectedCapacity.includes(cap.value)}
-							onChange={() => onCapacityChange(cap.value)}
-						/>
-						<label htmlFor={`capacity-${cap.value}`}>
-							{cap.label}{' '}
-							<span style={{ color: '#9ca3af', fontWeight: 400 }}>
-								({cap.count})
+
+			<div className='filters-section'>
+				<h3 className='filters-title'>CAPACITY</h3>
+				<div className='filters-options'>
+					{capacities.map(capacity => (
+						<label key={capacity.id} className='filter-option'>
+							<input
+								type='checkbox'
+								className='filter-checkbox'
+								checked={selectedCapacities.includes(capacity.id)}
+								onChange={() => handleCapacityChange(capacity.id)}
+							/>
+							<span className='filter-label'>
+								{capacity.label}
+								<span className='filter-count'>({capacity.count})</span>
 							</span>
 						</label>
-					</div>
-				))}
+					))}
+				</div>
 			</div>
-			<div className='section-title'>PRICE</div>
-			<div className='filter-group'>
-				<input
-					type='range'
-					min='0'
-					max='1000'
-					step='10'
-					value={priceRange}
-					onChange={e => onPriceRangeChange(e.target.value)}
-					className='price-slider'
-				/>
-				<div className='price-value'>Max. ${priceRange}.00</div>
+
+			<div className='filters-section'>
+				<h3 className='filters-title'>PRICE</h3>
+				<div className='price-range'>
+					<input
+						type='range'
+						min='0'
+						max='1000'
+						value={maxPrice}
+						className='price-slider'
+						onChange={handlePriceChange}
+					/>
+					<div className='price-range-label'>
+						<span>Max. ${maxPrice}.00</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
 }
 
-export default Filters
+export default FiltersNew
