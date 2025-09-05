@@ -4,6 +4,8 @@ import ProductList from './components/ProductList'
 import Header from './components/Header'
 import Banner from './components/Banner'
 import Profile from './components/Profile'
+import Booking from './components/Booking'
+import CarDetails from './components/CarDetails'
 import './App.css'
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
 							}
 						/>
 						<Route path='/profile' element={<Profile />} />
+						<Route path='/car/:id' element={<CarDetails />} />
+						<Route path='/booking/:id' element={<Booking />} />
 					</Routes>
 				</main>
 			</div>

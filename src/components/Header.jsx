@@ -48,7 +48,7 @@ const Header = () => {
 		setIsProfileMenuOpen(false)
 		navigate('/')
 		toast.info('You have been logged out', {
-			position: "top-right",
+			position: 'top-right',
 			autoClose: 3000,
 			hideProgressBar: false,
 			closeOnClick: true,
