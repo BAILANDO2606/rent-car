@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './FiltersNew.css'
+import './Filters.css'
 
 const carTypes = [
 	{ id: 'sport', label: 'Sport', count: 10 },
@@ -17,7 +17,7 @@ const capacities = [
 	{ id: '8', label: '8 or More', count: 16 },
 ]
 
-function FiltersNew({ onFilterChange }) {
+function Filters({ onFilterChange }) {
 	const [selectedTypes, setSelectedTypes] = useState([])
 	const [selectedCapacities, setSelectedCapacities] = useState([])
 	const [maxPrice, setMaxPrice] = useState(100)
@@ -48,6 +48,8 @@ function FiltersNew({ onFilterChange }) {
 
 	const handlePriceChange = e => {
 		const price = parseInt(e.target.value)
+		const progress = (price / 1000) * 100
+		e.target.style.setProperty('--range-progress', `${progress}%`)
 		setMaxPrice(price)
 		onFilterChange?.({
 			types: selectedTypes,
@@ -118,4 +120,4 @@ function FiltersNew({ onFilterChange }) {
 	)
 }
 
-export default FiltersNew
+export default Filters
