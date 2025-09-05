@@ -1,0 +1,227 @@
+.car-details {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 32px 24px;
+}
+
+.car-details-main {
+	background: white;
+	border-radius: 10px;
+	padding: 24px;
+	margin-bottom: 24px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-info-section h1 {
+	font-size: 32px;
+	color: #1a202c;
+	margin-bottom: 12px;
+}
+
+.ratings {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.stars {
+	display: flex;
+	gap: 4px;
+}
+
+.star {
+	color: #d9d9d9;
+	font-size: 20px;
+}
+
+.star.filled {
+	color: #ffc107;
+}
+
+.review-count {
+	color: #90a3bf;
+	font-size: 14px;
+}
+
+.description {
+	color: #596780;
+	line-height: 1.6;
+	margin-bottom: 24px;
+}
+
+.car-images {
+	margin: 24px 0;
+}
+
+.main-image {
+	width: 100%;
+	height: 360px;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 16px;
+}
+
+.main-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.thumbnail-images {
+	display: flex;
+	gap: 16px;
+}
+
+.thumbnail {
+	width: 120px;
+	height: 80px;
+	border-radius: 8px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.thumbnail img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.specs-section {
+	display: flex;
+	gap: 48px;
+	margin: 32px 0;
+}
+
+.spec-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.spec-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.spec-label {
+	color: #90a3bf;
+	font-size: 14px;
+}
+
+.spec-value {
+	color: #1a202c;
+	font-weight: 500;
+}
+
+.pricing-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid #e9ecef;
+}
+
+.price-info {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.current-price {
+	font-size: 28px;
+	font-weight: 700;
+	color: #1a202c;
+}
+
+.original-price {
+	font-size: 16px;
+	color: #90a3bf;
+	text-decoration: line-through;
+}
+
+.price-suffix {
+	color: #90a3bf;
+}
+
+.rent-button {
+	background: #3563e9;
+	color: white;
+	border: none;
+	padding: 12px 24px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.rent-button:hover {
+	background: #2850c8;
+}
+
+.reviews-section {
+	background: white;
+	border-radius: 10px;
+	padding: 24px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h2 {
+	font-size: 24px;
+	color: #1a202c;
+	margin-bottom: 24px;
+}
+
+.review-item {
+	padding: 24px 0;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.review-item:last-child {
+	border-bottom: none;
+}
+
+.review-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.review-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	margin-right: 16px;
+}
+
+.review-author-info {
+	flex: 1;
+}
+
+.review-author-info h3 {
+	margin: 0;
+	color: #1a202c;
+	font-size: 16px;
+}
+
+.author-position {
+	color: #90a3bf;
+	font-size: 14px;
+	margin: 4px 0 0 0;
+}
+
+.review-date {
+	color: #90a3bf;
+	font-size: 14px;
+}
+
+.review-rating {
+	margin-bottom: 12px;
+}
+
+.review-content {
+	color: #596780;
+	line-height: 1.6;
+	margin: 0;
+}
