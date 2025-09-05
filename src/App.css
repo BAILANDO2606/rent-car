@@ -57,3 +57,26 @@ header {
 .nav-link:hover {
 	color: #000;
 }
+
+/* Banner layout for main page */
+.banner-row {
+	display: flex;
+	gap: 32px;
+	margin-bottom: 32px;
+}
+
+.banner-row .banner {
+	flex: 1;
+	min-width: 0;
+}
+
+.banner-row .banner:first-child {
+	margin-right: 0;
+}
+
+@media (max-width: 900px) {
+	.banner-row {
+		flex-direction: column;
+		gap: 20px;
+	}
+}
