@@ -2,11 +2,13 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 40px;
+	padding: 32px;
 	border-radius: 20px;
-	margin: 20px 0;
+	margin: 10px auto;
 	overflow: hidden;
 	position: relative;
+	max-width: 500px;
+	width: 85%;
 }
 
 .banner.primary {

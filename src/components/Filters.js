@@ -58,6 +58,15 @@ function Filters({ onFilterChange }) {
 		})
 	}
 
+	const formatPrice = price => {
+		return new Intl.NumberFormat('en-US', {
+			style: 'currency',
+			currency: 'USD',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(price)
+	}
+
 	return (
 		<div className='filters'>
 			<div className='filters-section'>
@@ -112,7 +121,7 @@ function Filters({ onFilterChange }) {
 						onChange={handlePriceChange}
 					/>
 					<div className='price-range-label'>
-						<span>Max. ${maxPrice}.00</span>
+						<span>Max. {formatPrice(maxPrice)}</span>
 					</div>
 				</div>
 			</div>
