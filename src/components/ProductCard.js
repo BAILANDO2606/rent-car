@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useFavorites } from '../context/FavoritesContext'
 import { FaHeart, FaGasPump, FaUsers } from 'react-icons/fa'
 import { GiGearStickPattern } from 'react-icons/gi'
 import './ProductCard.css'
@@ -13,11 +14,61 @@ const ProductCard = ({
 }) => {
 	const { id, name, type, image, price, fuelCapacity, transmission, capacity } =
 		product
-	const [isFavorite, setIsFavorite] = React.useState(false)
 	const navigate = useNavigate()
+	const { updateFavoritesCount } = useFavorites()
+
+	// Перевіряємо чи є машина в обраних при монтуванні компонента
+	const [isFavorite, setIsFavorite] = React.useState(() => {
+		const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+		return favorites.some(car => car.id === id)
+	})
 
 	const handleRentClick = () => {
 		navigate(`/car/${id}`)
+	}
+
+	const handleFavoriteClick = () => {
+		// Отримуємо поточні обрані з localStorage
+		const currentFavorites = JSON.parse(
+			localStorage.getItem('favorites') || '[]'
+		)
+
+		// Перевіряємо чи вже є така машина в обраних
+		const isAlreadyFavorite = currentFavorites.some(car => car.id === id)
+
+		if (!isAlreadyFavorite && !isFavorite) {
+			// Додаємо машину до обраних
+			const carToAdd = {
+				id,
+				name,
+				type,
+				images: [image],
+				specs: {
+					fuel: `${fuelCapacity}L`,
+					type: transmission,
+					capacity: `${capacity} Person`,
+				},
+				price: {
+					perDay: price,
+				},
+				rating: 4.5,
+				reviewCount: 10,
+			}
+			currentFavorites.push(carToAdd)
+			setIsFavorite(true)
+		} else if (isAlreadyFavorite && isFavorite) {
+			// Видаляємо машину з обраних
+			const index = currentFavorites.findIndex(car => car.id === id)
+			if (index !== -1) {
+				currentFavorites.splice(index, 1)
+				setIsFavorite(false)
+			}
+		}
+
+		// Зберігаємо оновлений список обраних
+		localStorage.setItem('favorites', JSON.stringify(currentFavorites))
+		// Оновлюємо лічильник в хедері
+		updateFavoritesCount()
 	}
 
 	return (
@@ -29,7 +80,8 @@ const ProductCard = ({
 				</div>
 				<button
 					className={`favorite-button ${isFavorite ? 'active' : ''}`}
-					onClick={() => setIsFavorite(!isFavorite)}
+					onClick={handleFavoriteClick}
+					title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
 				>
 					<FaHeart />
 				</button>

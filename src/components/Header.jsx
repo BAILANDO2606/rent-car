@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useFavorites } from '../context/FavoritesContext'
 import { FaSearch, FaHeart, FaUser } from 'react-icons/fa'
 import './Header.css'
 import ProfileMenu from './ProfileMenu'
@@ -14,6 +15,7 @@ const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const profileMenuRef = useRef(null)
 	const navigate = useNavigate()
+	const { favoritesCount } = useFavorites()
 
 	useEffect(() => {
 		const handleClickOutside = event => {
@@ -28,6 +30,10 @@ const Header = () => {
 		document.addEventListener('mousedown', handleClickOutside)
 		return () => document.removeEventListener('mousedown', handleClickOutside)
 	}, [])
+
+	const handleFavoritesClick = () => {
+		navigate('/favorites')
+	}
 
 	const handleLogin = formData => {
 		// Тут буде логіка для входу
@@ -83,8 +89,15 @@ const Header = () => {
 					/>
 				</div>
 				<nav className='nav-buttons'>
-					<button className='icon-button' title='Вибрані'>
+					<button
+						className='icon-button'
+						title='Вибрані'
+						onClick={handleFavoritesClick}
+					>
 						<FaHeart size={20} />
+						{favoritesCount > 0 && (
+							<span className='favorites-count'>{favoritesCount}</span>
+						)}
 					</button>
 					<div className='profile-menu-container' ref={profileMenuRef}>
 						<button

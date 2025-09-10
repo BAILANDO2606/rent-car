@@ -4,11 +4,12 @@
 	align-items: center;
 	padding: 32px;
 	border-radius: 20px;
-	margin: 10px auto;
+	margin: 4px auto;
 	overflow: hidden;
 	position: relative;
-	max-width: 500px;
-	width: 85%;
+	max-width: 1280px;
+	width: calc(100% - 40px);
+	box-sizing: border-box;
 }
 
 .banner.primary {

@@ -85,13 +85,33 @@ const CarDetails = () => {
 
 				<div className='car-images'>
 					<div className='main-image'>
+						<button
+							className='nav-button prev'
+							onClick={() =>
+								setMainImage(prev =>
+									prev === 0 ? car.images.length - 1 : prev - 1
+								)
+							}
+						>
+							‹
+						</button>
 						<img src={car.images[mainImage]} alt={car.name} />
+						<button
+							className='nav-button next'
+							onClick={() =>
+								setMainImage(prev =>
+									prev === car.images.length - 1 ? 0 : prev + 1
+								)
+							}
+						>
+							›
+						</button>
 					</div>
 					<div className='thumbnail-images'>
 						{car.images.map((image, index) => (
 							<div
 								key={index}
-								className='thumbnail'
+								className={`thumbnail ${mainImage === index ? 'active' : ''}`}
 								onClick={() => setMainImage(index)}
 							>
 								<img src={image} alt={`${car.name} view ${index + 1}`} />

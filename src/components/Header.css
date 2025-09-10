@@ -48,6 +48,45 @@
 
 .nav-buttons {
 	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.icon-button {
+	background: none;
+	border: none;
+	color: #596780;
+	cursor: pointer;
+	padding: 8px;
+	border-radius: 50%;
+	transition: all 0.2s ease;
+	position: relative;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.icon-button:hover {
+	background: rgba(53, 99, 233, 0.1);
+	color: #3563e9;
+}
+
+.favorites-count {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: #3563e9;
+	color: white;
+	font-size: 12px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
 	gap: 1rem;
 	align-items: center;
 }
