@@ -10,30 +10,22 @@ const CarDetails = () => {
 	const navigate = useNavigate()
 	const [mainImage, setMainImage] = useState(0)
 
-	// This would normally come from an API/database
-	const car = {
+	// Import the products data
+	const products = require('../products').default
+
+	// Find the car from our products data
+	const car = products.find(p => p.id === parseInt(id)) || {
 		id: id,
-		name: 'Koenigsegg Agera R',
-		rating: 4.9,
-		reviewCount: 26,
-		description:
-			'Experience pure automotive excellence with the Koenigsegg Agera R. This hypercar represents the pinnacle of engineering and design, offering breathtaking performance and unmatched luxury. With its powerful engine and advanced aerodynamics, the Agera R delivers an unforgettable driving experience.',
-		images: [
-			'/images/koenigsegg.png',
-			'/images/koenigsegg.png',
-			'/images/koenigsegg.png',
-			'/images/koenigsegg.png',
-		],
-		specs: {
-			type: 'Automatic',
-			capacity: '2 People',
-			fuel: '92L',
-			mileage: '9.5 MPG',
-		},
-		price: {
-			perDay: 99.0,
-			discount: 120.0,
-		},
+		name: 'Car Not Found',
+		rating: 0,
+		reviewCount: 0,
+		description: 'This car could not be found in our database.',
+		images: [`${process.env.PUBLIC_URL}/images/cars/default-car.png`],
+		type: 'Not Available',
+		transmission: 'Not Available',
+		capacity: 0,
+		fuelCapacity: 0,
+		price: 0,
 		reviews: [
 			{
 				id: 1,
@@ -95,7 +87,14 @@ const CarDetails = () => {
 						>
 							‹
 						</button>
-						<img src={car.images[mainImage]} alt={car.name} />
+						<img
+							src={car.images[mainImage]}
+							alt={car.name}
+							onError={e => {
+								e.target.onerror = null
+								e.target.src = `${process.env.PUBLIC_URL}/images/cars/default-car.png`
+							}}
+						/>
 						<button
 							className='nav-button next'
 							onClick={() =>
@@ -114,7 +113,14 @@ const CarDetails = () => {
 								className={`thumbnail ${mainImage === index ? 'active' : ''}`}
 								onClick={() => setMainImage(index)}
 							>
-								<img src={image} alt={`${car.name} view ${index + 1}`} />
+								<img
+									src={image}
+									alt={`${car.name} view ${index + 1}`}
+									onError={e => {
+										e.target.onerror = null
+										e.target.src = `${process.env.PUBLIC_URL}/images/cars/default-car.png`
+									}}
+								/>
 							</div>
 						))}
 					</div>
@@ -125,28 +131,28 @@ const CarDetails = () => {
 						<GiSteeringWheel size={24} color='#90A3BF' />
 						<div className='spec-info'>
 							<span className='spec-label'>Type</span>
-							<span className='spec-value'>{car.specs.type}</span>
+							<span className='spec-value'>{car.transmission}</span>
 						</div>
 					</div>
 					<div className='spec-item'>
 						<MdPeople size={24} color='#90A3BF' />
 						<div className='spec-info'>
 							<span className='spec-label'>Capacity</span>
-							<span className='spec-value'>{car.specs.capacity}</span>
+							<span className='spec-value'>{`${car.capacity} People`}</span>
 						</div>
 					</div>
 					<div className='spec-item'>
 						<MdLocalGasStation size={24} color='#90A3BF' />
 						<div className='spec-info'>
 							<span className='spec-label'>Fuel Capacity</span>
-							<span className='spec-value'>{car.specs.fuel}</span>
+							<span className='spec-value'>{`${car.fuelCapacity}L`}</span>
 						</div>
 					</div>
 					<div className='spec-item'>
 						<MdSpeed size={24} color='#90A3BF' />
 						<div className='spec-info'>
 							<span className='spec-label'>Mileage</span>
-							<span className='spec-value'>{car.specs.mileage}</span>
+							<span className='spec-value'>{`${car.mileage} MPG`}</span>
 						</div>
 					</div>
 				</div>
@@ -156,9 +162,11 @@ const CarDetails = () => {
 						<span className='current-price'>
 							${car.price.perDay.toFixed(2)}
 						</span>
-						<span className='original-price'>
-							${car.price.discount.toFixed(2)}
-						</span>
+						{car.price.discount && (
+							<span className='original-price'>
+								${car.price.discount.toFixed(2)}
+							</span>
+						)}
 						<span className='price-suffix'>/ day</span>
 					</div>
 					<button className='rent-button' onClick={handleRentNow}>

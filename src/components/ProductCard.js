@@ -88,7 +88,15 @@ const ProductCard = ({
 			</div>
 
 			<div className='product-image-container'>
-				<img src={image} alt={name} className='product-image' />
+				<img
+					src={image}
+					alt={name}
+					className='product-image'
+					onError={e => {
+						e.target.onerror = null
+						e.target.src = `${process.env.PUBLIC_URL}/images/cars/default-car.png`
+					}}
+				/>
 			</div>
 
 			<div className='product-specs'>
